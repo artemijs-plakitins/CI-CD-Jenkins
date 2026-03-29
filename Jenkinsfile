@@ -81,6 +81,53 @@ pipeline {
                 echo 'Stage tests-on-dev finished.'
             }
         }
+        stage('deploy-to-stg') {
+            steps {
+                echo 'Stage deploy-to-stg started.'
+                deployToEnv('stg', '7002')
+                echo 'Stage deploy-to-stg finished.'
+            }
+        }
+
+        stage('tests-on-stg') {
+            steps {
+                echo 'Stage tests-on-stg started.'
+                testOnEnv('stg')
+                echo 'Stage tests-on-stg finished.'
+            }
+        }
+
+        stage('deploy-to-preprod') {
+            steps {
+                echo 'Stage deploy-to-preprod started.'
+                deployToEnv('preprod', '7003')
+                echo 'Stage deploy-to-preprod finished.'
+            }
+        }
+
+        stage('tests-on-preprod') {
+            steps {
+                echo 'Stage tests-on-preprod started.'
+                testOnEnv('preprod')
+                echo 'Stage tests-on-preprod finished.'
+            }
+        }
+
+        stage('deploy-to-prod') {
+            steps {
+                echo 'Stage deploy-to-prod started.'
+                deployToEnv('prod', '7004')
+                echo 'Stage deploy-to-prod finished.'
+            }
+        }
+
+        stage('tests-on-prod') {
+            steps {
+                echo 'Stage tests-on-prod started.'
+                testOnEnv('prod')
+                echo 'Stage tests-on-prod finished.'
+            }
+        }
     }
 
     post {
