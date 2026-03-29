@@ -1,3 +1,5 @@
+def PYTHON = 'C:\\Python312\\python.exe'
+
 def installPythonDeps() {
     bat '''
         echo Installing Python dependencies.
@@ -6,7 +8,7 @@ def installPythonDeps() {
         cd python-greetings
 
         echo Creating venv
-        python -m venv venv
+        "${PYTHON}" -m venv venv
 
         echo Installing pip packages into venv.
         call venv\\Scripts\\python -m pip install -r requirements.txt
