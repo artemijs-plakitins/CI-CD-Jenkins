@@ -70,6 +70,14 @@ pipeline {
             echo 'Pipeline failed. Check stage logs for details.'
         }
         always {
+            echo 'Stopping PM2 processes...'
+            bat '''
+                cmd /c ""%PM2_PATH%" delete greetings-app-dev || exit /b 0"
+                cmd /c ""%PM2_PATH%" delete greetings-app-stg || exit /b 0"
+                cmd /c ""%PM2_PATH%" delete greetings-app-preprod || exit /b 0"
+                cmd /c ""%PM2_PATH%" delete greetings-app-prod || exit /b 0"
+                cmd /c ""%PM2_PATH%" kill || exit /b 0"
+            '''
             echo 'Pipeline execution finished.'
         }
     }
