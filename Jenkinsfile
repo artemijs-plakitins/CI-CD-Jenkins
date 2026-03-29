@@ -15,7 +15,6 @@ def installPythonDeps() {
 
 def deployToEnv(String envName, String port) {
     bat """
-        echo === DEPLOY STAGE ${envName} ===
         if exist python-greetings rmdir /s /q python-greetings
         git clone https://github.com/mtararujs/python-greetings.git
         cd python-greetings
@@ -26,14 +25,11 @@ def deployToEnv(String envName, String port) {
         echo Installing pip packages for ${envName}
         call venv\\Scripts\\python -m pip install -r requirements.txt
 
-        echo Deleting old PM2 app for ${envName}
-        cmd /c "pm2 delete greetings-app-${envName} || exit /b 0"
+        echo Deleting old app for ${envName}
+        call "%PM2_PATH%" delete greetings-app-${envName}
 
         echo Starting app on port ${port}
-        call pm2 start app.py --name greetings-app-${envName} --interpreter venv\\Scripts\\python -- --port ${port}
-
-        echo PM2 list:
-        call pm2 list
+        call "%PM2_PATH%" start app.py --name greetings-app-${envName} --interpreter venv\\Scripts\\python -- --port ${port}
     """
 }
 
@@ -46,6 +42,7 @@ pipeline {
 
     environment {
         PYTHON_PATH = 'C:\\Users\\plaki\\AppData\\Local\\Programs\\Python\\Python314\\python.exe'
+        PM2_PATH = 'C:\\Users\\plaki\\AppData\\Roaming\\npm\\pm2.cmd'
     }
 
     stages {
