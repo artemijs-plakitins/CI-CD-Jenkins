@@ -8,7 +8,7 @@ def installPythonDeps() {
         cd python-greetings
 
         echo Creating venv
-        "${PYTHON}" -m venv venv
+        "%PYTHON_PATH%" -m venv venv
 
         echo Installing pip packages into venv.
         call venv\\Scripts\\python -m pip install -r requirements.txt
@@ -20,6 +20,10 @@ pipeline {
 
     options {
         timestamps()
+    }
+
+    environment {
+        PYTHON_PATH = 'C:\Users\plaki\AppData\Local\Programs\Python\Python314\python.exe'
     }
 
     stages {
