@@ -1,15 +1,15 @@
 def installPythonDeps() {
-    sh '''
-        echo "Installing dependencies"
-        rm -rf python-greetings
+    bat '''
+        echo Installing Python dependencies.
+        if exist python-greetings rmdir /s /q python-greetings
         git clone https://github.com/mtararujs/python-greetings.git
         cd python-greetings
 
-        echo "Creating venv"
-        python3 -m venv venv
+        echo Creating venv
+        python -m venv venv
 
-        echo "Installing packages into virtual environment"
-        ./venv/bin/python -m pip install -r requirements.txt
+        echo Installing pip packages into venv.
+        call venv\\Scripts\\python -m pip install -r requirements.txt
     '''
 }
 
