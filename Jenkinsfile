@@ -33,6 +33,20 @@ def deployToEnv(String envName, String port) {
     """
 }
 
+def testOnEnv(String envName) {
+    bat """
+        if exist course-js-api-framework rmdir /s /q course-js-api-framework
+        git clone https://github.com/mtararujs/course-js-api-framework.git
+        cd course-js-api-framework
+
+        echo Installing npm packages for ${envName}
+        call npm install
+
+        echo Running tests for ${envName}
+        call npm run greetings greetings_${envName}
+    """
+}
+
 pipeline {
     agent any
 
@@ -58,6 +72,13 @@ pipeline {
                 echo 'Stage deploy-to-dev started.'
                 deployToEnv('dev', '7001')
                 echo 'Stage deploy-to-dev finished.'
+            }
+        }
+        stage('tests-on-dev') {
+            steps {
+                echo 'Stage tests-on-dev started.'
+                testOnEnv('dev')
+                echo 'Stage tests-on-dev finished.'
             }
         }
     }
