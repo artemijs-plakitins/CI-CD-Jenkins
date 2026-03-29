@@ -10,6 +10,7 @@ def installPythonDeps() {
 
         echo "Installing packages into virtual environment"
         ./venv/bin/python -m pip install -r requirements.txt
+    '''
 }
 
 pipeline {
@@ -27,6 +28,7 @@ pipeline {
                 echo 'Stage install-pip-deps finished.'
             }
         }
+    }
 
     post {
         success {
