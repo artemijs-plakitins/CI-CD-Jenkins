@@ -1,7 +1,7 @@
 def PYTHON = 'C:\\Python312\\python.exe'
 
 def installPythonDeps() {
-    bat '''
+    bat """
         echo Installing Python dependencies.
         if exist python-greetings rmdir /s /q python-greetings
         git clone https://github.com/mtararujs/python-greetings.git
@@ -12,7 +12,7 @@ def installPythonDeps() {
 
         echo Installing pip packages into venv.
         call venv\\Scripts\\python -m pip install -r requirements.txt
-    '''
+    """
 }
 
 pipeline {
